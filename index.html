@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outlaw Terminal Portfolio - Akbar</title>
+
+  <!-- Google Font: Courier Prime untuk kesan Monospace Otentik & Retro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       TEMA COWBOY KLASIK (COLOR PALETTE & RESET)
+       ========================================== */
+    :root {
+      --bg-desert: #22150c;         /* Coklat Hitam Malam Gurun */
+      --wood-dark: #3a2212;         /* Kayu Tua / Kulit Gelap */
+      --wood-border: #623e23;       /* Bingkai Coklat */
+      --leather-light: #d2a679;     /* Coklat Muda / Suede (Teks Utama) */
+      --cowboy-gold: #e5a93c;        /* Emas Lencana Sheriff */
+      --wanted-paper: #e8d3b2;      /* Warna Kertas Poster Wanted */
+      --text-dark: #2b1704;         /* Teks Gelap Kertas */
+      --alert-red: #c0392b;         /* Merah Bata Outlaw */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-desert);
+      color: var(--leather-light);
+      font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* ==========================================
+       TERMINAL CONTAINER & HEADER
+       ========================================== */
+    .terminal-window {
+      width: 100%;
+      max-width: 900px;
+      height: 620px;
+      background-color: var(--wood-dark);
+      border: 3px solid var(--wood-border);
+      border-radius: 8px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background-color: #1c1008;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid var(--wood-border);
+    }
+
+    .sheriff-badge {
+      color: var(--cowboy-gold);
+      font-weight: bold;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+
+    .window-title {
+      flex: 1;
+      text-align: center;
+      font-size: 14px;
+      color: var(--cowboy-gold);
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* ==========================================
+       QUICK NAV BUTTONS (COWBOY STYLE)
+       ========================================== */
+    .quick-nav {
+      background-color: #27170c;
+      padding: 10px 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--wood-border);
+    }
+
+    .nav-btn {
+      background: var(--wood-dark);
+      color: var(--leather-light);
+      border: 1px solid var(--wood-border);
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: bold;
+    }
+
+    .nav-btn:hover {
+      background: var(--cowboy-gold);
+      color: var(--text-dark);
+      border-color: var(--cowboy-gold);
+    }
+
+    /* ==========================================
+       TERMINAL BODY & CONTENT
+       ========================================== */
+    .terminal-body {
+      padding: 18px;
+      flex: 1;
+      overflow-y: auto;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .output-line {
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .text-gold { color: var(--cowboy-gold); font-weight: bold; }
+    .text-light { color: var(--leather-light); }
+    .text-red { color: var(--alert-red); }
+
+    /* ==========================================
+       WANTED POSTER (FRAME FOTO PROFIL)
+       ========================================== */
+    .wanted-poster {
+      background-color: var(--wanted-paper);
+      color: var(--text-dark);
+      border: 3px dashed var(--wood-dark);
+      padding: 15px;
+      width: 240px;
+      text-align: center;
+      margin: 15px 0;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+      border-radius: 4px;
+    }
+
+    .wanted-title {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      border-bottom: 2px solid var(--text-dark);
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+    }
+
+    .profile-frame {
+      width: 100%;
+      height: 180px;
+      border: 2px solid var(--text-dark);
+      background-color: #d8c2a1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .profile-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.5) contrast(1.1); /* Efek Vintage / Klasik */
+    }
+
+    /* Placeholder jika foto belum dimasukkan */
+    .avatar-placeholder {
+      font-size: 48px;
+      color: var(--text-dark);
+    }
+
+    .wanted-name {
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .wanted-reward {
+      font-size: 12px;
+      color: var(--alert-red);
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    /* ==========================================
+       INPUT LINE & PROMPT
+       ========================================== */
+    .input-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 5px;
+    }
+
+    .prompt {
+      color: var(--cowboy-gold);
+      font-weight: bold;
+    }
+
+    .cmd-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--leather-light);
+      font-family: inherit;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    a {
+      color: var(--cowboy-gold);
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #fff;
+    }
+
+    /* Custom Scrollbar */
+    .terminal-body::-webkit-scrollbar {
+      width: 8px;
+    }
+    .terminal-body::-webkit-scrollbar-track {
+      background: var(--wood-dark);
+    }
+    .terminal-body::-webkit-scrollbar-thumb {
+      background: var(--wood-border);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="terminal-window">
+    <!-- Header Terminal -->
+    <div class="terminal-header">
+      <span class="sheriff-badge">★</span>
+      <div class="window-title">WESTERN_SALOON_CLI // AKBAR_AUNILLAH</div>
+    </div>
+
+    <!-- Quick Navigation Shortcuts -->
+    <div class="quick-nav">
+      <button class="nav-btn" onclick="executeCommand('profile')">profile</button>
+      <button class="nav-btn" onclick="executeCommand('about')">about</button>
+      <button class="nav-btn" onclick="executeCommand('skills')">skills</button>
+      <button class="nav-btn" onclick="executeCommand('projects')">projects</button>
+      <button class="nav-btn" onclick="executeCommand('contact')">contact</button>
+      <button class="nav-btn" onclick="executeCommand('help')">help</button>
+      <button class="nav-btn" onclick="executeCommand('clear')">clear</button>
+    </div>
+
+    <!-- Body Terminal -->
+    <div class="terminal-body" id="terminalOutput">
+      <div class="output-line text-gold">
++-------------------------------------------------------------+
+|    WELCOME TO THE WILD WEST TERMINAL PORTFOLIO              |
+|    Ketik 'help' atau klik tombol navigasi di atas.          |
++-------------------------------------------------------------+
+      </div>
+    </div>
+
+    <!-- Line Input Terminal -->
+    <div style="padding: 0 18px 18px 18px;">
+      <div class="input-line">
+        <span class="prompt">sheriff@wildwest:~$</span>
+        <input type="text" id="cliInput" class="cmd-input" autofocus autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cliInput = document.getElementById('cliInput');
+    const terminalOutput = document.getElementById('terminalOutput');
+
+    // ==========================================
+    // DATA PERINTAH & RESPONS TERMINAL
+    // ==========================================
+    const commands = {
+      help: `Daftar perintah yang tersedia di Saloon:
+  <span class="text-gold">profile</span>   - Menampilkan Frame Foto Profil (WANTED Poster)
+  <span class="text-gold">about</span>     - Informasi latar belakang singkat
+  <span class="text-gold">skills</span>    - Keahlian & disiplin ilmu yang dikuasai
+  <span class="text-gold">projects</span>  - Daftar ekspedisi & proyek yang telah dikerjakan
+  <span class="text-gold">contact</span>   - Cara mengirim pesan / menghubungi saya
+  <span class="text-gold">clear</span>     - Membersihkan papan terminal`,
+
+      profile: `
+<div class="wanted-poster">
+  <div class="wanted-title">WANTED</div>
+  <div class="profile-frame">
+    <!-- Ganti 'profile.jpg' dengan nama/path foto profil Anda -->
+    <img src="profile.jpg" alt="Foto Profil Akbar" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\"avatar-placeholder\">🤠</div>';">
+  </div>
+  <div class="wanted-name">AKBAR AUNILLAH S.</div>
+  <div style="font-size: 11px; margin-top: 3px;">WEB DEVELOPER & SPATIAL EXPLORER</div>
+  <div class="wanted-reward">REWARD: CREATIVE CODE</div>
+</div>`,
+
+      about: `<span class="text-gold">[ ABOUT ME ]</span>
+Halo, Partner! Saya Akbar.
+Saya seorang Web Developer yang memiliki minat besar dalam pengembangan aplikasi web
+interaktif, logika pemograman, serta eksplorasi Geografi & Kartografi.
+
+Sama seperti penjelajah di Wild West, saya selalu mencari tantangan baru dalam
+dunia teknologi web dan pemetaan digital.`,
+
+      skills: `<span class="text-gold">[ SKILLS & WEAPONRY ]</span>
+- <span class="text-gold">Frontend Core:</span> HTML5, CSS3 (Custom Styling & Layouts), JavaScript (ES6+)
+- <span class="text-gold">Logic & Computational:</span> Algoritma, Pemikiran Komputasional
+- <span class="text-gold">Spatial & Geography:</span> Kartografi Digital, Sistem Informasi Geografis (SIG)
+- <span class="text-gold">Tools:</span> Git, GitHub, VS Code`,
+
+      projects: `<span class="text-gold">[ EXPEDITIONS & PROJECTS ]</span>
+1. <span class="text-gold">Outlaw Terminal Portfolio</span>
+   - Website profil interaktif berkonsep Terminal Cowboy (HTML/CSS/JS).
+2. <span class="text-gold">Digital Mapping & Spatial Visualization</span>
+   - Visualisasi data berbasis wilayah dan pemetaan geografis.
+3. <span class="text-gold">Interactive Web Application</span>
+   - Aplikasi web dinamis yang mengutamakan UX interaktif.`,
+
+      contact: `<span class="text-gold">[ DISPATCH & CONTACT ]</span>
+Anda dapat mengirim pesan melalui saluran berikut:
+- Email    : <a href="mailto:email@domain.com">email@domain.com</a>
+- GitHub   : <a href="https://github.com" target="_blank">github.com/username</a>
+- LinkedIn : <a href="https://linkedin.com" target="_blank">linkedin.com/in/username</a>`
+    };
+
+    // ==========================================
+    // LOGIKA EKSEKUSI PERINTAH
+    // ==========================================
+    function executeCommand(cmd) {
+      const cleanCmd = cmd.trim().toLowerCase();
+
+      // Menampilkan baris input pengguna
+      const userLine = document.createElement('div');
+      userLine.className = 'output-line';
+      userLine.innerHTML = `<span class="prompt">sheriff@wildwest:~$</span> ${cmd}`;
+      terminalOutput.appendChild(userLine);
+
+      if (cleanCmd === 'clear') {
+        terminalOutput.innerHTML = '';
+      } else if (commands[cleanCmd]) {
+        const responseLine = document.createElement('div');
+        responseLine.className = 'output-line';
+        responseLine.innerHTML = commands[cleanCmd];
+        terminalOutput.appendChild(responseLine);
+      } else if (cleanCmd !== '') {
+        const errorLine = document.createElement('div');
+        errorLine.className = 'output-line text-red';
+        errorLine.innerHTML = `Command '${cmd}' not recognized in this town. Ketik 'help' untuk panduan.`;
+        terminalOutput.appendChild(errorLine);
+      }
+
+      // Auto-scroll ke bagian paling bawah
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
+
+    // Event Listener Enter
+    cliInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const command = cliInput.value;
+        executeCommand(command);
+        cliInput.value = '';
+      }
+    });
+
+    // Tetap fokus pada input saat terminal diklik
+    document.querySelector('.terminal-window').addEventListener('click', () => {
+      cliInput.focus();
+    });
+  </script>
+</body>
+</html>
